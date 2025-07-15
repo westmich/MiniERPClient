@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniERPClient", "MiniERPClient\MiniERPClient.csproj", "{3930C950-968A-44DE-B4B2-BECCC6DD1D85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3930C950-968A-44DE-B4B2-BECCC6DD1D85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3930C950-968A-44DE-B4B2-BECCC6DD1D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3930C950-968A-44DE-B4B2-BECCC6DD1D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3930C950-968A-44DE-B4B2-BECCC6DD1D85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38AA3254-FA6E-498C-98B0-905CAF4281F0}
+	EndGlobalSection
+EndGlobal

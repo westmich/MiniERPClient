@@ -1,0 +1,112 @@
+﻿<Window x:Class="MiniERPClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MiniERPClient"
+        mc:Ignorable="d"
+        Title="Mini ERP Client - Multi-Module Demo" Height="650" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <!-- Navigation Button Style with Active State -->
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#34495E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="0,0,2,0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3E50"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1B2631"/>
+                            </Trigger>
+                            <!-- Active state trigger -->
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter Property="Background" Value="#3498DB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <!-- Active state with mouse over -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Tag" Value="Active"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="#2980B9"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#F8F9FA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="Mini ERP Client - Comprehensive Demo" 
+                          Foreground="White" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Text="Ready" Foreground="White" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Navigation Menu -->
+        <Border Grid.Row="1" Background="#34495E" Padding="0">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="EmployeeButton" Content="Employee Management" Click="EmployeeButton_Click" Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="CustomerButton" Content="Customer Management" Click="CustomerButton_Click" Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="ProductButton" Content="Product Management" Click="ProductButton_Click" Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="ProjectButton" Content="Project Management" Click="ProjectButton_Click" Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="DashboardButton" Content="Dashboard &amp; Analytics" Click="DashboardButton_Click" Style="{StaticResource NavButtonStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Dynamic Content Area -->
+        <Grid x:Name="ContentArea" Grid.Row="2" Margin="0">
+            <!-- Views will be dynamically loaded here -->
+        </Grid>
+
+        <!-- Footer -->
+        <Border Grid.Row="3" Background="#34495E" Padding="20,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="Mini ERP Client v1.0 - Complete ERP Solution with Project Management &amp; Dashboard Analytics" 
+                          Foreground="#BDC3C7" VerticalAlignment="Center"/>
+                
+                <TextBlock Grid.Column="1" Text="Multi-Module ERP Demo" 
+                          Foreground="#BDC3C7" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

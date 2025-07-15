@@ -1,0 +1,235 @@
+<UserControl x:Class="MiniERPClient.Views.ProductEditDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MiniERPClient.Views"
+             xmlns:controls="clr-namespace:MiniERPClient.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="500">
+    
+    <UserControl.Resources>
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+        </Style>
+        
+        <Style x:Key="FormTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="35"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" Value="#E74C3C"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="FormComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="35"/>
+        </Style>
+
+        <Style x:Key="CancelButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="White" BorderBrush="#ECF0F1" BorderThickness="1" CornerRadius="8">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                <TextBlock FontSize="20" FontWeight="Bold" Foreground="#2C3E50">
+                    <TextBlock.Text>
+                        <Binding Path="IsNewProduct" Converter="{StaticResource BooleanToStringConverter}" ConverterParameter="Add New Product|Edit Product"/>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Rectangle Height="2" Fill="#3498DB" Margin="0,10,0,0"/>
+            </StackPanel>
+
+            <!-- Form Fields -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- Product Name -->
+                    <TextBlock Text="Product Name *" Style="{StaticResource FormLabelStyle}"/>
+                    <TextBox Text="{Binding Product.Name, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource FormTextBoxStyle}"/>
+
+                    <!-- SKU -->
+                    <TextBlock Text="SKU *" Style="{StaticResource FormLabelStyle}"/>
+                    <TextBox Text="{Binding Product.SKU, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource FormTextBoxStyle}"/>
+
+                    <!-- Description -->
+                    <TextBlock Text="Description *" Style="{StaticResource FormLabelStyle}"/>
+                    <TextBox Text="{Binding Product.Description, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource FormTextBoxStyle}"
+                             AcceptsReturn="True" 
+                             TextWrapping="Wrap" 
+                             Height="60"/>
+
+                    <!-- Category -->
+                    <TextBlock Text="Category *" Style="{StaticResource FormLabelStyle}"/>
+                    <ComboBox SelectedItem="{Binding Product.Category, UpdateSourceTrigger=PropertyChanged}" 
+                              ItemsSource="{Binding AvailableCategories}"
+                              Style="{StaticResource FormComboBoxStyle}"/>
+
+                    <!-- Status -->
+                    <TextBlock Text="Status *" Style="{StaticResource FormLabelStyle}"/>
+                    <ComboBox SelectedItem="{Binding Product.Status, UpdateSourceTrigger=PropertyChanged}" 
+                              ItemsSource="{Binding AvailableStatuses}"
+                              Style="{StaticResource FormComboBoxStyle}"/>
+
+                    <!-- Pricing Section -->
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Price *" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.Price, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Cost Price *" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.CostPrice, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Stock Information -->
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Stock Qty" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.StockQuantity, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Reorder Level" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.ReorderLevel, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Max Stock" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.MaxStockLevel, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Supplier -->
+                    <TextBlock Text="Supplier *" Style="{StaticResource FormLabelStyle}"/>
+                    <TextBox Text="{Binding Product.Supplier, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource FormTextBoxStyle}"/>
+
+                    <!-- Supplier Contact Information -->
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Supplier Email" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.SupplierContactEmail, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Supplier Phone" Style="{StaticResource FormLabelStyle}"/>
+                            <TextBox Text="{Binding Product.SupplierPhone, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource FormTextBoxStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Notes -->
+                    <TextBlock Text="Notes" Style="{StaticResource FormLabelStyle}"/>
+                    <TextBox Text="{Binding Product.Notes, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource FormTextBoxStyle}"
+                             AcceptsReturn="True" 
+                             TextWrapping="Wrap" 
+                             Height="60"/>
+
+                    <!-- Is Active -->
+                    <CheckBox Content="Active Product" 
+                              IsChecked="{Binding Product.IsActive, UpdateSourceTrigger=PropertyChanged}"
+                              Margin="0,0,0,15"
+                              FontWeight="SemiBold"/>
+
+                    <!-- Loading Indicator -->
+                    <controls:LoadingSpinner IsLoading="{Binding IsSaving}" 
+                                           LoadingText="Saving product..."
+                                           SpinnerColor="#3498DB"
+                                           Margin="0,10,0,0"
+                                           HorizontalAlignment="Center"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Buttons -->
+            <Grid Grid.Row="2" Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Validation Summary -->
+                <TextBlock Grid.Column="0" 
+                          Text="{Binding ValidationSummary}" 
+                          Foreground="#E74C3C" 
+                          FontSize="12"
+                          TextWrapping="Wrap"
+                          VerticalAlignment="Center"
+                          Visibility="{Binding HasValidationErrors, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <Button Grid.Column="1" 
+                        Content="Cancel" 
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource CancelButtonStyle}"
+                        Margin="0,0,10,0"
+                        MinWidth="80"/>
+
+                <Button Grid.Column="2" 
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource SuccessButtonStyle}"
+                        MinWidth="120">
+                    <Button.Content>
+                        <Binding Path="IsNewProduct" Converter="{StaticResource BooleanToStringConverter}" ConverterParameter="Add Product|Save Changes"/>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
